@@ -58,4 +58,3 @@ public class BulletinBoard {
         scanner.close();
     }
 }
-}
