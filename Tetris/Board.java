@@ -6,10 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
 
 public class Board extends JPanel implements ActionListener {
     private final int BOARD_WIDTH = 10;
@@ -45,11 +41,11 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private int squareWidth() {
-        return (int) getSize().getWidth() / BOARD_WIDTH;
+        return CELL_SIZE;
     }
 
     private int squareHeight() {
-        return (int) getSize().getHeight() / BOARD_HEIGHT;
+        return CELL_SIZE;
     }
 
     private Shape.Tetrominoes shapeAt(int x, int y) {
@@ -114,7 +110,9 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void oneLineDown() {
-        if (!tryMove(curPiece, curX, curY - 1)) pieceDropped();
+        if (!tryMove(curPiece, curX, curY - 1)) {
+            pieceDropped();
+        }
     }
 
     private void clearBoard() {
@@ -153,10 +151,12 @@ public class Board extends JPanel implements ActionListener {
         for (int i = 0; i < 4; ++i) {
             int x = newX + newPiece.x(i);
             int y = newY - newPiece.y(i);
-            if (x < 0 || x >= BOARD_WIDTH || y < 0 || y >= BOARD_HEIGHT)
+            if (x < 0 || x >= BOARD_WIDTH || y < 0 || y >= BOARD_HEIGHT) {
                 return false;
-            if (shapeAt(x, y) != Shape.Tetrominoes.NoShape)
+            }
+            if (shapeAt(x, y) != Shape.Tetrominoes.NoShape) {
                 return false;
+            }
         }
 
         curPiece = newPiece;
@@ -198,10 +198,12 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void drawSquare(Graphics g, int x, int y, Shape.Tetrominoes shape) {
-        Color colors[] = { new Color(0, 0, 0), new Color(204, 102, 102),
-                new Color(102, 204, 102), new Color(102, 102, 204),
-                new Color(204, 204, 102), new Color(204, 102, 204),
-                new Color(102, 204, 204), new Color(218, 170, 0) };
+        Color[] colors = {
+            new Color(0, 0, 0), new Color(204, 102, 102),
+            new Color(102, 204, 102), new Color(102, 102, 204),
+            new Color(204, 204, 102), new Color(204, 102, 204),
+            new Color(102, 204, 204), new Color(218, 170, 0)
+        };
 
         Color color = colors[shape.ordinal()];
 
@@ -253,8 +255,6 @@ public class Board extends JPanel implements ActionListener {
                     dropDown();
                     break;
                 case 'd':
-                    oneLineDown();
-                    break;
                 case 'D':
                     oneLineDown();
                     break;
