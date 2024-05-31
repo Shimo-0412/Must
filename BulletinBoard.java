@@ -1,4 +1,4 @@
-package experiment.Must.Must; // 各自変更
+package Must; // 各自変更
 
 import java.util.ArrayList;
 import java.util.Scanner;
