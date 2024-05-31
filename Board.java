@@ -45,6 +45,79 @@ public class Board extends JPanel implements ActionListener {
         initBoard();
     }
 
+    public Board() {
+        initBoard();
+    }
+
+    private void initBoard() {
+        setFocusable(true);
+        addKeyListener(new TAdapter());
+        curPiece = new Shape();
+        timer = new Timer(400, this);
+        timer.start();
+        board = new Shape.Tetrominoes[BOARD_WIDTH * BOARD_HEIGHT];
+        clearBoard();
+    }
+
+    private class TAdapter extends KeyAdapter {
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if (!isStarted || curPiece.getShape() == Shape.Tetrominoes.NoShape) {
+                return;
+            }
+
+            int keycode = e.getKeyCode();
+
+            if (keycode == 'p' || keycode == 'P') {
+                pause();
+                return;
+            }
+
+            if (isPaused) {
+                return;
+            }
+
+            switch (keycode) {
+                case KeyEvent.VK_LEFT:
+                    tryMove(curPiece, curX - 1, curY);
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    tryMove(curPiece, curX + 1, curY);
+                    break;
+                case KeyEvent.VK_DOWN:
+                    oneLineDown();
+                    break;
+                case KeyEvent.VK_UP:
+                    tryMove(curPiece.rotateRight(), curX, curY);
+                    break;
+                case KeyEvent.VK_SPACE:
+                    dropDown();
+                    break;
+            }
+        }
+    }
+
+    private void dropDown() {
+        int newY = curY;
+        while (newY > 0) {
+            if (!tryMove(curPiece, curX, newY - 1)) {
+                break;
+            }
+            --newY;
+        }
+        pieceDropped();
+    }
+
+    private void pause() {
+        isPaused = !isPaused;
+        if (isPaused) {
+            timer.stop();
+        } else {
+            timer.start();
+        }
+        repaint();
+    }
+
     private void initBoard() {
         setFocusable(true);
         curPiece = new Shape();
