@@ -1,0 +1,86 @@
+html, body {
+    width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  #add {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s ease-in-out;
+  }
+  
+  #add:hover {
+    background: #218838;
+  }
+  
+  #add:active {
+    transform: scale(0.95);
+  }
+  
+  #body {
+    width: 50vw;
+    min-height: 100vh;
+    border: solid #000;
+    border-width: 0px 1px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    position: relative;
+    margin-top: 80px; /* 追加ボタンの高さ分の余白を確保 */
+  }
+  
+  .handout {
+    width: 80%;
+    height: 100px;
+    font-size: 20px;
+    border: solid 1px #000;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: white;
+    position: relative;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s;
+  }
+  
+  .handout:focus {
+    outline: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  
+  .delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .handout.dragging {
+    opacity: 0.5;
+  }
