@@ -2,18 +2,19 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const http = require('http');
 const socketIo = require('socket.io');
+const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 let messages = [];
 
-app.get('/messages', (req, res) => {
-    res.json(messages);
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 app.post('/messages', (req, res) => {
@@ -24,9 +25,11 @@ app.post('/messages', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    console.log('a user connected');
+    console.log('A user connected');
+    socket.emit('initMessages', messages);
+
     socket.on('disconnect', () => {
-        console.log('user disconnected');
+        console.log('A user disconnected');
     });
 });
 
